@@ -111,6 +111,27 @@ describe( 'distributions-uniform-mgf', function tests() {
 		}
 	});
 
+
+	it( 'should throw an error if provided support parameters `a` and `b` such that a >= b', function test() {
+		var values = [
+			[ 2, 1 ],
+			[ 3, 3 ],
+			[ -1, -2 ]
+		];
+
+		for ( var i = 0; i < values.length; i++ ) {
+			expect( badValue( values[i] ) ).to.throw( Error );
+		}
+		function badValue( value ) {
+			return function() {
+				mgf( [ 1, 2, 3, 4 ], {
+					'a': value[ 0 ],
+					'b': value[ 1 ]
+				});
+			};
+		}
+	});
+
 	it( 'should return NaN if the first argument is neither a number, array-like, or matrix-like', function test() {
 		var values = [
 			// '5', // valid as is array-like (length)
@@ -195,7 +216,7 @@ describe( 'distributions-uniform-mgf', function tests() {
 			expected,
 			i;
 
-		data = new Float32Array( validationData.data );
+		data = new Float64Array( validationData.data );
 
 		expected = new Float64Array( validationData.expected.map( function( d ) {
 			return d === 'Inf' ? Infinity : d;
@@ -203,13 +224,13 @@ describe( 'distributions-uniform-mgf', function tests() {
 
 		actual = mgf( data, {
 			'a': validationData.a,
-		'b': validationData.b
+			'b': validationData.b
 		});
 		assert.notEqual( actual, data );
 
 		for ( i = 0; i < actual.length; i++ ) {
 			if ( isFiniteNumber( actual[ i ] ) && isFiniteNumber( expected[ i ] ) ) {
-				assert.closeTo( actual[ i ], expected[ i ], 1e-14 );
+				assert.closeTo( actual[ i ], expected[ i ], 1e-12 );
 			}
 		}
 
@@ -217,16 +238,16 @@ describe( 'distributions-uniform-mgf', function tests() {
 		actual = mgf( data, {
 			'copy': false,
 			'a': validationData.a,
-		'b': validationData.b
+			'b': validationData.b
 		});
-		expected = new Float32Array( validationData.expected.map( function( d ) {
+		expected = new Float64Array( validationData.expected.map( function( d ) {
 			return d === 'Inf' ? Infinity : d;
 		}) );
 		assert.strictEqual( actual, data );
 
 		for ( i = 0; i < actual.length; i++ ) {
 			if ( isFiniteNumber( actual[ i ] ) && isFiniteNumber( expected[ i ] ) ) {
-				assert.closeTo( actual[ i ], expected[ i ], 1e-14 );
+				assert.closeTo( actual[ i ], expected[ i ], 1e-12 );
 			}
 		}
 	});

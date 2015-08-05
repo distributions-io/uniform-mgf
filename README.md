@@ -7,7 +7,7 @@ Moment-Generating Function
 The [moment-generating function](https://en.wikipedia.org/wiki/Moment-generating_function) for a [uniform](https://en.wikipedia.org/wiki/uniform_distribution) random variable is
 
 <div class="equation" align="center" data-raw-text="
-    M_X(t) := \mathbb{E}\!\left[e^{tX}\right]" data-equation="eq:mgf_function">
+M_X(t) := \mathbb{E}\!\left[e^{tX}\right]= 	\begin{cases} \frac{\mathrm{e}^{tb}-\mathrm{e}^{ta}}{t(b-a)} &amp; \text{for } t \neq 0 \\ 1 &\text{for } t = 0 \end{cases}" data-equation="eq:mgf_function">
 	<img src="" alt="Moment-generating function (MGF) for a uniform distribution.">
 	<br>
 </div>
