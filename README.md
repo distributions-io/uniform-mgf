@@ -8,11 +8,11 @@ The [moment-generating function](https://en.wikipedia.org/wiki/Moment-generating
 
 <div class="equation" align="center" data-raw-text="
 M_X(t) := \mathbb{E}\!\left[e^{tX}\right]= 	\begin{cases} \frac{\mathrm{e}^{tb}-\mathrm{e}^{ta}}{t(b-a)} &amp; \text{for } t \neq 0 \\ 1 &\text{for } t = 0 \end{cases}" data-equation="eq:mgf_function">
-	<img src="" alt="Moment-generating function (MGF) for a uniform distribution.">
+	<img src="https://cdn.rawgit.com/distributions-io/uniform-mgf/3ab385ed93a9b0032f76a2544ff59ea747b269fd/docs/img/eqn.svg" alt="Moment-generating function (MGF) for a uniform distribution.">
 	<br>
 </div>
 
-where `a` is the minimum support and `b` is the maximum support.
+where `a` is the minimum support and `b` is the maximum support. The parameters must satisfy `a < b`.
 
 ## Installation
 
@@ -41,18 +41,18 @@ var matrix = require( 'dstructs-matrix' ),
 	i;
 
 out = mgf( 1 );
-// returns
+// returns ~1.718
 
 out = mgf( -1 );
-// returns 0
+// returns ~0.632
 
 t = [ 0, 0.5, 1, 1.5, 2, 2.5 ];
 out = mgf( t );
-// returns [...]
+// returns [ 1, ~1.297, ~1.718, ~2.321, ~3.195, ~4.473 ]
 
 t = new Int8Array( t );
 out = mgf( t );
-// returns Float64Array( [...] )
+// returns Float64Array( [1,1,~1.718,~1.718,~3.195,~3.195] )
 
 t = new Float32Array( 6 );
 for ( i = 0; i < 6; i++ ) {
@@ -67,9 +67,9 @@ mat = matrix( t, [3,2], 'float32' );
 
 out = mgf( mat );
 /*
-	[
-
-	   ]
+	[  1     ~1.297
+	  ~1.718 ~2.321
+	  ~3.195 ~4.473 ]
 */
 ```
 
@@ -83,16 +83,16 @@ The function accepts the following `options`:
 *	__path__: [deepget](https://github.com/kgryte/utils-deep-get)/[deepset](https://github.com/kgryte/utils-deep-set) key path.
 *	__sep__: [deepget](https://github.com/kgryte/utils-deep-get)/[deepset](https://github.com/kgryte/utils-deep-set) key path separator. Default: `'.'`.
 
-A [uniform](https://en.wikipedia.org/wiki/uniform_distribution) distribution is a function of 2 parameter(s): `a`(minimum support) and `b`(maximum support). By default, `a` is equal to `0` and `b` is equal to `1`. To adjust either parameter, set the corresponding option(s).
+A [uniform](https://en.wikipedia.org/wiki/uniform_distribution) distribution is a function of two parameters: `a`(minimum support) and `b`(maximum support). By default, `a` is equal to `0` and `b` is equal to `1`. To adjust either parameter, set the corresponding option.
 
 ``` javascript
 var t = [ 0, 0.5, 1, 1.5, 2, 2.5 ];
 
 var out = mgf( t, {
-	'a': 2,
-	'b': 4
+	'a': 1,
+	'b': 2
 });
-// returns [...]
+// returns [ 1, ~2.139, ~4.671, ~10.403, ~23.605, ~54.492 ]
 ```
 
 For non-numeric `arrays`, provide an accessor `function` for accessing `array` values.
@@ -114,7 +114,7 @@ function getValue( d, i ) {
 var out = mgf( data, {
 	'accessor': getValue
 });
-// returns [...]
+// returns [ 1, ~1.297, ~1.718, ~2.321, ~3.195, ~4.473 ]
 ```
 
 
@@ -136,12 +136,12 @@ var out = mgf( data, {
 });
 /*
 	[
-		{'x':[0,]},
-		{'x':[1,]},
-		{'x':[2,]},
-		{'x':[3,]},
-		{'x':[4,]},
-		{'x':[5,]}
+		{'x':[0,1]},
+		{'x':[1,~1.297]},
+		{'x':[2,~1.718]},
+		{'x':[3,~2.321]},
+		{'x':[4,~3.195]},
+		{'x':[5,~4.473]}
 	]
 */
 
@@ -159,13 +159,13 @@ t = new Int8Array( [0,1,2,3,4] );
 out = mgf( t, {
 	'dtype': 'int32'
 });
-// returns Int32Array( [...] )
+// returns Int32Array( [1,1,3,6,13] )
 
 // Works for plain arrays, as well...
-out = mgf( [0,0.5,1,1.5,2], {
+out = mgf( [0,1,2,3,4], {
 	'dtype': 'uint8'
 });
-// returns Uint8Array( [...] )
+// returns Uint8Array( [1,1,3,6,13] )
 ```
 
 By default, the function returns a new data structure. To mutate the input data structure (e.g., when input values can be discarded or when optimizing memory usage), set the `copy` option to `false`.
@@ -182,7 +182,7 @@ t = [ 0, 0.5, 1, 1.5, 2 ];
 out = mgf( t, {
 	'copy': false
 });
-// returns [...]
+// returns [ 1, ~1.297, ~1.718, ~2.321, ~3.195, ~4.473 ]
 
 bool = ( t === out );
 // returns true
@@ -202,9 +202,9 @@ out = mgf( mat, {
 	'copy': false
 });
 /*
-	[
-
-	   ]
+	[  1     ~1.297
+	  ~1.718 ~2.321
+	  ~3.195 ~4.473 ]
 */
 
 bool = ( mat === out );
@@ -214,7 +214,7 @@ bool = ( mat === out );
 
 ## Notes
 
-*	If an element is __not__ a numeric value, the evaluated [PDF](https://en.wikipedia.org/wiki/uniform_distribution) is `NaN`.
+*	If an element is __not__ a numeric value, the evaluated [MGF](https://en.wikipedia.org/wiki/uniform_distribution) is `NaN`.
 
 	``` javascript
 	var data, out;
@@ -381,7 +381,7 @@ Copyright &copy; 2015. The [Compute.io](https://github.com/compute-io) Authors.
 [travis-image]: http://img.shields.io/travis/distributions-io/uniform-mgf/master.svg
 [travis-url]: https://travis-ci.org/distributions-io/uniform-mgf
 
-[codecov-image]: https://img.shields.io/codecov/github/distributions-io/uniform-mgf/master.svg
+[codecov-image]: https://img.shields.io/codecov/c/github/distributions-io/uniform-mgf/master.svg
 [codecov-url]: https://codecov.io/github/distributions-io/uniform-mgf?branch=master
 
 [dependencies-image]: http://img.shields.io/david/distributions-io/uniform-mgf.svg
