@@ -153,15 +153,13 @@ describe( 'distributions-uniform-mgf', function tests() {
 			data = validationData.data,
 			expected = validationData.expected.map( function( d ) {
 				return d === 'Inf' ? Infinity : d;
-			}),
-			a = validationData.a,
-		b = validationData.b;
+			});
 
 			var actual;
 			for ( var i = 0; i < data.length; i++ ) {
 				actual =  mgf( data[ i ], {
 					'a': validationData.a,
-		'b': validationData.b
+					'b': validationData.b
 				});
 				if ( isFiniteNumber( actual ) && isFiniteNumber( expected[ i ] ) ) {
 					assert.closeTo( actual, expected[ i ] , 1e-14 );
@@ -185,7 +183,7 @@ describe( 'distributions-uniform-mgf', function tests() {
 
 		actual = mgf( data, {
 			'a': validationData.a,
-		'b': validationData.b
+			'b': validationData.b
 		});
 		assert.notEqual( actual, data );
 
@@ -198,7 +196,7 @@ describe( 'distributions-uniform-mgf', function tests() {
 		actual = mgf( data, {
 			'copy': false,
 			'a': validationData.a,
-		'b': validationData.b
+			'b': validationData.b
 		});
 		assert.strictEqual( actual, data );
 
@@ -268,7 +266,7 @@ describe( 'distributions-uniform-mgf', function tests() {
 		actual = mgf( data, {
 			'dtype': 'float32',
 			'a': validationData.a,
-		'b': validationData.b
+			'b': validationData.b
 		});
 
 		assert.notEqual( actual, data );
@@ -299,7 +297,7 @@ describe( 'distributions-uniform-mgf', function tests() {
 		actual = mgf( data, {
 			'accessor': getValue,
 			'a': validationData.a,
-		'b': validationData.b
+			'b': validationData.b
 		});
 		assert.notEqual( actual, data );
 
@@ -343,7 +341,7 @@ describe( 'distributions-uniform-mgf', function tests() {
 		actual = mgf( data, {
 			'path': 'x.1',
 			'a': validationData.a,
-		'b': validationData.b
+			'b': validationData.b
 		});
 
 		expected = validationData.expected
@@ -370,7 +368,7 @@ describe( 'distributions-uniform-mgf', function tests() {
 			'path': 'x/1',
 			'sep': '/',
 			'a': validationData.a,
-		'b': validationData.b
+			'b': validationData.b
 		});
 		assert.strictEqual( actual, data );
 
@@ -397,7 +395,7 @@ describe( 'distributions-uniform-mgf', function tests() {
 		mat = matrix( d1, [5,5], 'float64' );
 		out = mgf( mat, {
 			'a': validationData.a,
-		'b': validationData.b
+			'b': validationData.b
 		});
 
 		for ( i = 0; i < out.length; i++ ) {
@@ -436,7 +434,7 @@ describe( 'distributions-uniform-mgf', function tests() {
 		out = mgf( mat, {
 			'dtype': 'float32',
 			'a': validationData.a,
-		'b': validationData.b
+			'b': validationData.b
 		});
 
 		assert.strictEqual( out.dtype, 'float32' );

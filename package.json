@@ -1,7 +1,7 @@
 {
   "name": "distributions-uniform-mgf",
   "version": "0.0.0",
-  "description": "uniform distribution moment-generating function (MGF)",
+  "description": "Uniform distribution moment-generating function (MGF)",
   "author": {
     "name": "Philipp Burckhardt",
     "email": "pburckhardt@outlook.com"
@@ -20,20 +20,23 @@
   "main": "./lib",
   "repository": {
     "type": "git",
-    "url": "git://github.com/compute-io/uniform-mgf.git"
+    "url": "git://github.com/distributions-io/uniform-mgf.git"
   },
   "keywords": [
     "distributions.io",
     "distributions",
+    "distribution",
     "probability",
     "statistics",
     "stats",
     "mgf",
     "generating functions",
-    "moments"
+    "moments",
+    "uniform",
+    "continuous"
   ],
   "bugs": {
-    "url": "https://github.com/compute-io/uniform-mgf/issues"
+    "url": "https://github.com/distributions-io/uniform-mgf/issues"
   },
   "dependencies": {
     "compute-array-constructors": "^1.0.0",
